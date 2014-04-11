@@ -115,7 +115,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="237dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_vertical"
         android:gravity="bottom"
         android:theme="@android:style/Theme.Holo"

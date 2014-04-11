@@ -7,6 +7,7 @@ import java.util.List;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.os.Build;
 
-public class PlayerActivity extends ActionBarActivity implements OnClickListener, OnItemClickListener{
+public class PlayerActivity extends Activity implements OnClickListener, OnItemClickListener{
 
 	ImageButton add_game;
 	ImageButton add_series;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class MainActivity extends ActionBarActivity implements OnClickListener, OnItemClickListener{
+public class MainActivity extends Activity implements OnClickListener, OnItemClickListener{
 
 	ListView  playerList;
 	ImageButton add_player;

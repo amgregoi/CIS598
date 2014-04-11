@@ -3,6 +3,7 @@ package com.example.tenpin;
 
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class GameActivity extends ActionBarActivity {
+public class GameActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
