@@ -97,6 +97,38 @@ public class GameActivity extends Activity {
 			case R.id.next_throw_button:
 				Toast.makeText(getApplicationContext(), "next!", Toast.LENGTH_SHORT).show();
 				break;
+			case R.id.Frame1:
+				Toast.makeText(getApplicationContext(), "Frame 1!", Toast.LENGTH_SHORT).show();
+				temp = (ImageView)findViewById(R.id.Frame1);
+				temp.setColorFilter(0x77000000);
+				break;
+			case R.id.Frame2:
+				Toast.makeText(getApplicationContext(), "Frame 2!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame3:
+				Toast.makeText(getApplicationContext(), "Frame 3!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame4:
+				Toast.makeText(getApplicationContext(), "Frame 4!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame5:
+				Toast.makeText(getApplicationContext(), "Frame 5!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame6:
+				Toast.makeText(getApplicationContext(), "Frame 6!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame7:
+				Toast.makeText(getApplicationContext(), "Frame 7!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame8:
+				Toast.makeText(getApplicationContext(), "Frame 8!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame9:
+				Toast.makeText(getApplicationContext(), "Frame 9!", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.Frame10:
+				Toast.makeText(getApplicationContext(), "Frame 10!", Toast.LENGTH_SHORT).show();
+				break;
 			default:
 				break;
 		}

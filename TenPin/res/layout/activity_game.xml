@@ -16,51 +16,48 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/ImageView06"
-                android:layout_width="match_parent"
+                android:id="@+id/Frame1"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView05"
-                android:layout_width="match_parent"
+                android:id="@+id/Frame2"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView04"
-                android:layout_width="match_parent"
+                android:id="@+id/Frame3"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView03"
-                android:layout_width="match_parent"
+                android:id="@+id/Frame4"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
+                android:id="@+id/Frame5"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_weight="1.4"
                 android:scaleType="fitXY"
-                android:src="@drawable/frame1_9" />
-
-            <ImageView
-                android:id="@+id/ImageView02"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
         </LinearLayout>
 
@@ -71,43 +68,48 @@
             android:layout_centerVertical="true" >
 
             <ImageView
-                android:id="@+id/ImageView16"
+                android:id="@+id/Frame6"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView01"
+                android:id="@+id/Frame7"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView15"
+                android:id="@+id/Frame8"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1.4"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/ImageView14"
+                android:id="@+id/Frame9"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1.4"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame1_9" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/Frame10"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1.4"
                 android:scaleType="fitXY"
+                android:onClick="onClick"
                 android:src="@drawable/frame10" />
         </LinearLayout>
 
@@ -296,7 +298,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="bottom" >
 
         <ImageButton
