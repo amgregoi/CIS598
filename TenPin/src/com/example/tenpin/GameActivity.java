@@ -4,6 +4,11 @@ package com.example.tenpin;
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,9 +103,39 @@ public class GameActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "next!", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.Frame1:
+				
+				/* TEST CODE: COME BACK TO THIS
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 */
 				Toast.makeText(getApplicationContext(), "Frame 1!", Toast.LENGTH_SHORT).show();
 				temp = (ImageView)findViewById(R.id.Frame1);
 				temp.setColorFilter(0x77000000);
+				
+				/*
+				Bitmap bmp = BitmapFactory.decodeResource(this.getResources(), v.getId());
+				if(bmp == null) System.out.println("BITMAP IS NULL\n");
+				else System.out.println("SOMETHING ELSE\n");
+				Canvas c = new Canvas(bmp.copy(Bitmap.Config.ARGB_8888, true));
+				//c.setBitmap(bmp);
+				
+				
+				Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	            // text color - #3D3D3D
+	            paint.setColor(Color.BLACK);
+				c.drawText("6", 50, 50, paint);
+				c.drawColor(Color.RED);
+				*/
+				
+				
 				break;
 			case R.id.Frame2:
 				Toast.makeText(getApplicationContext(), "Frame 2!", Toast.LENGTH_SHORT).show();
