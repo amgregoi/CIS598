@@ -38,6 +38,8 @@ public class PlayerActivity extends Activity implements OnClickListener, OnItemC
 		recordList = (ListView)findViewById(R.id.player_record_list);
 		records = new ArrayList<Record>();
 		
+		
+		//hardcoded values atm
 		records.add(new Game("new GAme"));
 		records.add(new Series("NEW SERIES!"));
 		
