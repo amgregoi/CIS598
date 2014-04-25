@@ -20,7 +20,7 @@ public class Player implements Parcelable {
 	@Override
 	public String toString()
 	{
-		return this.name + "\t\t" + this.date;	
+		return this.name;	
 	}
 
     protected Player(Parcel in) {

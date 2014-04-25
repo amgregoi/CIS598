@@ -144,32 +144,32 @@
 
             <ImageView
                 android:id="@+id/pin7_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin7" />
 
             <ImageView
                 android:id="@+id/pin8_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin8" />
 
             <ImageView
                 android:id="@+id/pin9_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin9" />
 
             <ImageView
                 android:id="@+id/pin10_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin10" />
@@ -180,7 +180,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@android:drawable/screen_background_light_transparent" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -208,24 +207,24 @@
 
             <ImageView
                 android:id="@+id/pin4_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin4" />
 
             <ImageView
                 android:id="@+id/pin5_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin5" />
 
             <ImageView
                 android:id="@+id/pin6_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin6" />
@@ -275,16 +274,16 @@
 
             <ImageView
                 android:id="@+id/pin2_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin2" />
 
             <ImageView
                 android:id="@+id/pin3_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:onClick="onClick"
                 android:src="@drawable/pin3" />
@@ -325,9 +324,16 @@
                 android:src="@android:drawable/screen_background_light_transparent" />
 
             <ImageView
+                android:id="@+id/ImageView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@android:drawable/screen_background_light_transparent" />
+
+            <ImageView
                 android:id="@+id/pin1_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:onClick="onClick"
                 android:src="@drawable/pin1" />
 
@@ -337,6 +343,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@android:drawable/screen_background_light_transparent" />
+
+            <ImageView
+                android:id="@+id/ImageView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@android:drawable/screen_background_light_transparent" />
+
         </LinearLayout>
     </RelativeLayout>
 

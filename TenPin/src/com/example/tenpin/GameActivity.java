@@ -18,8 +18,9 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class GameActivity extends Activity {
-	int activeFrame = 0;
-	char[][] pinLayout = new char[10][10];
+	int activeFrame = 1;
+	char[][] pinLayout;//= new char[10][10];
+	Game game;
 	
 	
 	
@@ -29,14 +30,36 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		
-		//Intent i = getIntent();
-		//Game game = i.getParcelableExtra("game");
-		//getActionBar().setTitle(game.getScore());
+		Intent i = getIntent();
+		game = i.getParcelableExtra("game");
 		
+		getActionBar().setTitle(game.toString());
 		
-		init();
+		if(game.getPinLayout() == null)
+		{
+			System.out.println("Done this STUFF");
+			pinLayout = new char[10][10];
+			init();
+			game.setPinLayout(pinLayout);
+		}
+		else
+			pinLayout = game.getPinLayout();
 		
+		System.out.println(pinLayout[0][0]+"FF");
+		System.out.println(game.getPinLayout()[0][0]+"FF");
 	}
+	
+	@Override
+    public void onPause() {
+        super.onPause();
+        game.setPinLayout(pinLayout);
+    }
+	
+	@Override
+    public void onStop() {
+        super.onStop();
+        game.setPinLayout(pinLayout);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,7 +87,7 @@ public class GameActivity extends Activity {
 		{
 			case R.id.pin1_image:
 				temp = (ImageView)findViewById(R.id.pin1_image);
-				setPinTransparency(temp);
+				setPinTransparency(temp);				
 				pinLayout[activeFrame-1][0] = valToAlpha(temp.getAlpha());
 				break;
 			case R.id.pin2_image:
@@ -227,11 +250,6 @@ public class GameActivity extends Activity {
 			pin.setAlpha((float)1);
 	}
 
-	private void init(){
-		for(int i=0; i<10; i++)
-			for(int j=0; j<10; j++)
-				pinLayout[i][j] = '2';
-	}
 	
 	private void setFramePinLayout(int frame){
 		char[] layout = pinLayout[frame];
@@ -264,4 +282,11 @@ public class GameActivity extends Activity {
 		else 
 			return '2';
 	}
+	
+	private void init(){
+		for(int i=0; i<10; i++)
+			for(int j=0; j<10; j++)
+				pinLayout[i][j] = '2';
+	}
+	
 }

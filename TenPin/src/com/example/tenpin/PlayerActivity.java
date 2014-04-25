@@ -40,7 +40,7 @@ public class PlayerActivity extends Activity implements OnClickListener, OnItemC
 		
 		
 		//hardcoded values atm
-		records.add(new Game("new GAme"));
+		records.add(new Game("New Game"));
 		records.add(new Series("NEW SERIES!"));
 		
 		ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(this, android.R.layout.simple_list_item_1, records);
@@ -56,6 +56,7 @@ public class PlayerActivity extends Activity implements OnClickListener, OnItemC
 		statistics.setOnClickListener(this);
 		recordList.setOnItemClickListener(this);
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
