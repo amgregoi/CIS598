@@ -18,48 +18,37 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class GameActivity extends Activity {
-	int activeFrame = 1;
+	int activeFrame = 1, gamePosition;
 	char[][] pinLayout;//= new char[10][10];
 	Game game;
-	
-	
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		
-		Intent i = getIntent();
+		Intent i = getIntent();;
 		game = i.getParcelableExtra("game");
+		gamePosition = i.getIntExtra("pos", -1);
+		
+		
 		
 		getActionBar().setTitle(game.toString());
 		
 		if(game.getPinLayout() == null)
 		{
-			System.out.println("Done this STUFF");
+			System.out.println("NOOO: PinLayout still null");
 			pinLayout = new char[10][10];
 			init();
 			game.setPinLayout(pinLayout);
+			System.out.println("NOOO: "+Character.toString(game.getPinLayout()[0][0]));
 		}
 		else
+		{
 			pinLayout = game.getPinLayout();
-		
-		System.out.println(pinLayout[0][0]+"FF");
-		System.out.println(game.getPinLayout()[0][0]+"FF");
+			System.out.println(pinLayout[0][0]);
+		}
 	}
-	
-	@Override
-    public void onPause() {
-        super.onPause();
-        game.setPinLayout(pinLayout);
-    }
-	
-	@Override
-    public void onStop() {
-        super.onStop();
-        game.setPinLayout(pinLayout);
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -287,6 +276,19 @@ public class GameActivity extends Activity {
 		for(int i=0; i<10; i++)
 			for(int j=0; j<10; j++)
 				pinLayout[i][j] = '2';
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		//game.setPinLayout(pinLayout);
+        game.setName("new Name!");
+		System.out.println("NOOO: "+Character.toString(game.getPinLayout()[0][0]));
+		Intent i = new Intent();
+		i.putExtra("game", game);
+		i.putExtra("pos", gamePosition);
+		setResult(RESULT_OK, i);
+		super.onBackPressed();
 	}
 	
 }

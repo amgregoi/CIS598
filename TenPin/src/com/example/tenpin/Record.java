@@ -18,7 +18,7 @@ public abstract class Record implements Parcelable{
 	public Record(String name, String type) {
 		super();
 		this.name = name;
-		this.setType(type);
+		this.type = type;
 	}
 	
 	public static final Parcelable.Creator<Record> CREATOR = new Parcelable.Creator<Record>() {
@@ -26,12 +26,15 @@ public abstract class Record implements Parcelable{
 			String recordType = in.readString();
 			Record record = null;
 			
-			if(recordType.equals("Dog"))
-			record = (Record)new Game(in);
-			
-			if(recordType.equals("Cat"))
-			record = (Record)new Series(in);
-			
+			if(recordType.equals("Game")){
+				record = (Record)new Game(in);
+				System.out.println("NOOOO: HOW DID THIS HAPPEN");
+			}
+			if(recordType.equals("Series")){
+				record = (Record)new Series(in);
+				System.out.println("NOOOO: EVEN WORSE");
+			}
+			System.out.println("NOOO: yup that happened");
 			return record;
 		}
 		

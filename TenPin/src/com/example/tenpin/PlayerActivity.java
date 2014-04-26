@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,24 +27,36 @@ import android.os.Build;
 
 public class PlayerActivity extends Activity implements OnClickListener, OnItemClickListener{
 
-	ImageButton add_game;
-	ImageButton add_series;
-	ImageButton statistics;
-	ListView recordList;
-	List<Record> records;
+	private ImageButton add_game;
+	private ImageButton add_series;
+	private ImageButton statistics;
+	private ListView recordList;
+	private List<Record> records;
+	private Player player;
+	private ArrayAdapter<Record> adapter;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player);
+		
+		Intent i = getIntent();
+		player = i.getParcelableExtra("player");
+		
+		getActionBar().setTitle(player.toString());
+		
+		
+		
 		recordList = (ListView)findViewById(R.id.player_record_list);
-		records = new ArrayList<Record>();
+		records = player.getPlayerRecordList();
 		
 		
 		//hardcoded values atm
-		records.add(new Game("New Game"));
-		records.add(new Series("NEW SERIES!"));
+		//records.add(new Game("New Game"));
+		//records.add(new Series("NEW SERIES!"));
 		
-		ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(this, android.R.layout.simple_list_item_1, records);
+		adapter = new ArrayAdapter<Record>(this, android.R.layout.simple_list_item_1, records);
         recordList.setAdapter(adapter);	
 		
 		
@@ -90,37 +103,64 @@ public class PlayerActivity extends Activity implements OnClickListener, OnItemC
 		{
 			case R.id.add_game_button:
 				Toast.makeText(getApplicationContext(), "GAME", Toast.LENGTH_SHORT).show();
+				records.add(new Game("Game_Ha"));				
+				player.setPlayerRecordList(records);
 				break;
 			case R.id.add_series_button:
 				Toast.makeText(getApplicationContext(), "SERIES", Toast.LENGTH_SHORT).show();
+				records.add(new Series("Series_Ha"));
+				player.setPlayerRecordList(records);
 				break;
 			case R.id.stats_button:
-				Toast.makeText(getApplicationContext(), "STATS", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "STATS", Toast.LENGTH_SHORT).show();
+				System.out.println("NOOO: "+Integer.toString(player.getPlayerRecordList().size()));
 				break;
 			default:
 				break;
 		}
+		//ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(this, android.R.layout.simple_list_item_1, records);
+       // recordList.setAdapter(adapter);	
+		adapter.notifyDataSetChanged();
 	}
 	
 	@Override
     public void onItemClick(AdapterView parent, View v, int position, long id)
-    {
-    	//startActivity(new Intent(this, GameActivity.class));
-    	
-    	
+    {    	
     	Record temp = records.get(position);
     	if(temp instanceof Game)
     	{
     		Intent i = new Intent(this, GameActivity.class);
         	i.putExtra("game", records.get(position));
-        	startActivity(i);
+        	i.putExtra("pos", position);
+        	//records.remove(position);
+        	adapter.notifyDataSetChanged();
+        	startActivityForResult(i,1);
     	}
     	else if(temp instanceof Series)
     	{
     		Intent i = new Intent(this, SeriesActivity.class);
         	i.putExtra("series", records.get(position));
-        	startActivity(i);
+        	//records.remove(position);
+        	adapter.notifyDataSetChanged();
+        	startActivityForResult(i,1);
     	}
+    	
+    }
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			if(resultCode == RESULT_OK){      
+				
+				Game result = data.getParcelableExtra("game");
+				int position = data.getIntExtra("pos", -1);
+				
+				if(result != null && position >= 0)
+				{
+				        records.set(position, result);
+				        adapter.notifyDataSetChanged();
+				}
+			}
+		}
     }
 
 }

@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	ImageButton delete_player;
 	String user;
 	List<Player> players;
+	ArrayAdapter<Player> adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,10 +34,10 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		playerList = (ListView)findViewById(R.id.playerList);
 		players = new ArrayList<Player>();
 
-		players.add(new Player("Andy"));
-		players.add(new Player("Shea"));
+		//players.add(new Player("Andy"));
+		//players.add(new Player("Shea"));
 		
-        ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, players);
+        adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, players);
         playerList.setAdapter(adapter);	               
 	    
         add_player = (ImageButton)findViewById(R.id.add_player_button);
@@ -55,13 +56,6 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		return true;
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -95,7 +89,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     public void onItemClick(AdapterView parent, View v, int position, long id)
     {
     	Intent i = new Intent(this, PlayerActivity.class);
-    	i.putExtra("players", players.get(position));
+    	i.putExtra("player", players.get(position));
     	startActivity(i);
     }
     
@@ -106,10 +100,13 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 				//Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 				if(result.length() > 0)
 				{
-					players.add(new Player(result));
+						players.add(new Player(result));
+						adapter.notifyDataSetChanged();
+						//players.add(new Player(result));
 				}
 			}
 		}
+		adapter.notifyDataSetChanged();
     }
 
 

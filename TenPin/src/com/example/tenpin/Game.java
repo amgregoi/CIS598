@@ -6,10 +6,10 @@ import android.os.Parcelable;
 public class Game extends Record{
 
 	private String title;
-	char[][] pinLayout = null;
+	char[][] pinLayout;
 
 	public Game(String title){
-		super(title, "Game");
+		super(title, "Game2");
 		this.title = title;
 	}
 	
@@ -41,7 +41,7 @@ public class Game extends Record{
 	}
 	
 	public void setPinLayout(char[][] layout){
-		this.pinLayout = layout;
+		this.pinLayout = layout.clone();
 	}
 	
 	public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
