@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Series extends Record{
-	String title;
-	public Series(String name){
-		super(name, "Series");
+	String title, Owner;
+	public Series(String name, String owner){
+		super(name, owner, "Series");
 		title = name;
 	}
 	

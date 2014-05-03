@@ -1,9 +1,16 @@
 package com.example.tenpin;
 
+/*
+ * 
+ * CHANGE QUERY TO USE ID RATHER THAN NAME  *** IMPORTANT
+ * 
+ * 
+ */
+import com.google.gson.Gson;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,36 +24,50 @@ import android.widget.Toast;
 
 
 @SuppressLint("NewApi")
-public class GameActivity extends Activity {
+public class GameActivity extends DBManagment {
 	int activeFrame = 1, gamePosition;
 	char[][] pinLayout;//= new char[10][10];
+	String[][] scoreSheet;
 	Game game;
+	String playerName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		
-		Intent i = getIntent();;
-		game = i.getParcelableExtra("game");
-		gamePosition = i.getIntExtra("pos", -1);
-		
-		
+		Intent i = getIntent();
+		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND name is ?", new String[] {i.getStringExtra("name")}, null, null, null, null, null);
+		//Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND _id is ?", new String[] {Integer.toString(i.getIntExtra("id", -1))}, null, null, null, null, null);
+
+		System.out.println("NOOOOO: this is gay: "+Integer.toString(i.getIntExtra("id", -1)));
+
+		if(c.getCount() == 0)
+		{
+			super.finish();
+		}
+		while(c.moveToNext())
+		{
+			String json = c.getString(2);
+			String type = c.getString(1);
+			if(type.equals("Game"))
+				game = new Gson().fromJson(json, Game.class);	
+		}	
 		
 		getActionBar().setTitle(game.toString());
 		
 		if(game.getPinLayout() == null)
 		{
-			System.out.println("NOOO: PinLayout still null");
 			pinLayout = new char[10][10];
+			scoreSheet = new String[10][3];
 			init();
 			game.setPinLayout(pinLayout);
-			System.out.println("NOOO: "+Character.toString(game.getPinLayout()[0][0]));
 		}
 		else
 		{
 			pinLayout = game.getPinLayout();
-			System.out.println(pinLayout[0][0]);
+			scoreSheet = game.getScoreSheet();
+			setFramePinLayout(0);
 		}
 	}
 
@@ -95,7 +116,6 @@ public class GameActivity extends Activity {
 				temp = (ImageView)findViewById(R.id.pin4_image);
 				setPinTransparency(temp);
 				pinLayout[activeFrame-1][3] = valToAlpha(temp.getAlpha());
-
 				break;
 			case R.id.pin5_image:
 				temp = (ImageView)findViewById(R.id.pin5_image);
@@ -119,83 +139,66 @@ public class GameActivity extends Activity {
 				temp = (ImageView)findViewById(R.id.pin8_image);
 				setPinTransparency(temp);
 				pinLayout[activeFrame-1][7] = valToAlpha(temp.getAlpha());
-
 				break;
 			case R.id.pin9_image:
 				temp = (ImageView)findViewById(R.id.pin9_image);
 				setPinTransparency(temp);
 				pinLayout[activeFrame-1][8] = valToAlpha(temp.getAlpha());
-
 				break;
 			case R.id.pin10_image:
 				temp = (ImageView)findViewById(R.id.pin10_image);
 				setPinTransparency(temp);
 				pinLayout[activeFrame-1][9] = valToAlpha(temp.getAlpha());
-
 				break;
 			case R.id.next_throw_button:
 				Toast.makeText(getApplicationContext(), "next!", Toast.LENGTH_SHORT).show();
 				break;
+				
+				
 			case R.id.Frame1:
 				temp = (ImageView)findViewById(R.id.Frame1);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 1;
-				setFramePinLayout(0);
-				//temp.setColorFilter(0x00FFFF);
+				
+				//CUSTOM KEYBOARD POP UP HERE?  
+				
+				setFrameScore("6", "/", "", 0);
+				updateFrame(temp, 0);
 				break;
 			case R.id.Frame2:
 				temp = (ImageView)findViewById(R.id.Frame2);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 2;
-				setFramePinLayout(1);
+				setFrameScore("2", "/", "", 1);
+				updateFrame(temp, 1);
 				break;
 			case R.id.Frame3:
 				temp = (ImageView)findViewById(R.id.Frame3);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 3;
-				setFramePinLayout(2);
+				updateFrame(temp, 2);
 				break;
 			case R.id.Frame4:
 				temp = (ImageView)findViewById(R.id.Frame4);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 4;
-				setFramePinLayout(3);
+				updateFrame(temp, 3);
 				break;
 			case R.id.Frame5:
 				temp = (ImageView)findViewById(R.id.Frame5);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 5;
-				setFramePinLayout(4);
+				updateFrame(temp, 4);
 				break;
 			case R.id.Frame6:
 				temp = (ImageView)findViewById(R.id.Frame6);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 6;
-				setFramePinLayout(5);
+				updateFrame(temp, 5);
 				break;
 			case R.id.Frame7:
 				temp = (ImageView)findViewById(R.id.Frame7);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 7;
-				setFramePinLayout(6);
+				updateFrame(temp, 6);
 				break;
 			case R.id.Frame8:
 				temp = (ImageView)findViewById(R.id.Frame8);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 8;
-				setFramePinLayout(7);
+				updateFrame(temp, 7);
 				break;
 			case R.id.Frame9:
 				temp = (ImageView)findViewById(R.id.Frame9);
-				setFrameScore(temp, "6", "/", "");
-				activeFrame = 9;
-				setFramePinLayout(8);
+				updateFrame(temp, 8);
 				break;
 			case R.id.Frame10:
 				temp = (ImageView)findViewById(R.id.Frame10);
-				setFrameScore(temp, "6", "/", "X");
-				activeFrame = 10;
-				setFramePinLayout(9);
+				updateFrame(temp, 9);
 				break;
 			default:
 				break;
@@ -274,19 +277,44 @@ public class GameActivity extends Activity {
 	
 	private void init(){
 		for(int i=0; i<10; i++)
+		{
 			for(int j=0; j<10; j++)
 				pinLayout[i][j] = '2';
+		}
+		
+		
+	}
+	
+	private void updateFrame(ImageView temp, int frame)
+	{
+		
+		activeFrame = frame+1;
+		setFramePinLayout(frame);
+		String[] S = getFrameScore(frame);
+		if(S[0] != null)
+			setFrameScore(temp, S[0], S[1], "");
+	}
+	
+	
+	public void setFrameScore(String val1, String val2, String val3, int frame)
+	{
+		scoreSheet[frame][0] = val1;
+		scoreSheet[frame][1] = val2;
+		scoreSheet[frame][2] = val3;
+	}
+	
+	public String[] getFrameScore(int frame)
+	{
+		return new String[] {scoreSheet[frame][0],scoreSheet[frame][1], scoreSheet[frame][2]};
 	}
 	
 	@Override
 	public void onBackPressed()
 	{
-		//game.setPinLayout(pinLayout);
-        game.setName("new Name!");
-		System.out.println("NOOO: "+Character.toString(game.getPinLayout()[0][0]));
+		game.setPinLayout(pinLayout);
+		game.setScoreSheet(scoreSheet);
 		Intent i = new Intent();
-		i.putExtra("game", game);
-		i.putExtra("pos", gamePosition);
+		database.execSQL("UPDATE players SET object = ? WHERE name = ?", new Object[] {new Gson().toJson(game), game.getName()});
 		setResult(RESULT_OK, i);
 		super.onBackPressed();
 	}

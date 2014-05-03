@@ -5,35 +5,34 @@ import android.os.Parcelable;
 
 public class Game extends Record{
 
-	private String title;
 	char[][] pinLayout;
+	String[][] scoreSheet = new String[10][3];
 
-	public Game(String title){
-		super(title, "Game2");
-		this.title = title;
+	public Game(String title, String owner){
+		super(title, owner, "Game");
 	}
 	
 	public int describeContents() {
 		return this.hashCode();
 	}
 	
+	public void setScoreSheet(String[][] score)
+	{
+		scoreSheet = score;
+	}
+	
+	public String[][] getScoreSheet()
+	{
+		return scoreSheet;
+	}
+	
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(getType());
 		super.writeToParcel(dest, flags);
-		dest.writeString(getTitle());
 	}
 	
 	public Game(Parcel source) {
 		super(source);	
-		this.title = source.readString();
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	
 	public char[][] getPinLayout(){
@@ -57,7 +56,7 @@ public class Game extends Record{
 	@Override
 	public String toString()
 	{
-		return title;
+		return super.toString();
 	}
 	
 
