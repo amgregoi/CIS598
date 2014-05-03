@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="Cis598Appcompat_v7Unspecified.aar" >
+        <source path="C:\Users\Andy\Desktop\cis598\TenPin\build\exploded-bundles\Cis598Appcompat_v7Unspecified.aar\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\Andy\Desktop\cis598\TenPin\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Andy\Desktop\cis598\TenPin\build-types\debug\assets" />
+    </dataSet>
+
+</merger>

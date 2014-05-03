@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.os.Build;
 
-public class NewUserActivity extends Activity implements OnClickListener{
+public class NewUserActivity extends DBManagment implements OnClickListener{
 
 	Button done;
 	EditText input;
@@ -30,6 +30,12 @@ public class NewUserActivity extends Activity implements OnClickListener{
 		done = (Button)findViewById(R.id.done_button);
 		done.setOnClickListener(this);
 		
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
 	}
 
 	@Override
@@ -62,11 +68,12 @@ public class NewUserActivity extends Activity implements OnClickListener{
     			Intent i = new Intent();
     			i.putExtra("user", input.getText().toString());
     			setResult(RESULT_OK, i);
+    			this.finish();
     			break;
     		default:
     			break;
     	}
-    	this.finish();
+    	
     }
 
 }

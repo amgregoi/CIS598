@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tenpin.PlayerActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <ListView
+        android:id="@+id/player_record_list"
+        android:layout_width="fill_parent"
+        android:layout_height="383dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp" >
+    </ListView>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_gravity="bottom" >
+
+        <ImageButton
+            android:id="@+id/add_game_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/add_game_button" />
+
+        <ImageButton
+            android:id="@+id/add_series_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/add_series_button" />
+
+        <ImageButton
+            android:id="@+id/stats_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/stats_button" />
+    </LinearLayout>
+
+</FrameLayout>
+
+<!-- From: file:/C:/Users/Andy/Desktop/cis598/TenPin/res/layout/activity_player.xml -->

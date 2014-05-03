@@ -29,12 +29,15 @@ public class SeriesActivity extends Activity implements OnClickListener, OnItemC
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_series);
 
+		Intent i = getIntent();
+		Series s = i.getParcelableExtra("series");
+		
 		gameList = (ListView)findViewById(R.id.gameListView);
 		games = new ArrayList<Game>();
 		
-		games.add(new Game("Game 1"));
-		games.add(new Game("Game 2"));
-		games.add(new Game("Game 3"));
+		games.add(new Game("Game 1", s.getOwner()));
+		games.add(new Game("Game 2", s.getOwner()));
+		games.add(new Game("Game 3", s.getOwner()));
 		
 		ArrayAdapter<Game> adapter = new ArrayAdapter<Game>(this, android.R.layout.simple_list_item_1, games);
 		gameList.setAdapter(adapter);	 
