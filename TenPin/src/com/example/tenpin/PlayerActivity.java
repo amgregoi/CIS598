@@ -114,10 +114,11 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		switch(v.getId())
 		{
 			case R.id.add_game_button:
+				object_id++;
 				Toast.makeText(getApplicationContext(), "GAME", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Game g = new Game("(G) "+dateFormat+" "+Integer.toString(object_id+1), player.getName());
-				g.setId(object_id++);
+				Game g = new Game("(G) "+dateFormat+" "+Integer.toString(object_id), player.getName());
+				g.setId(object_id);
 				records.add(g);				
 				player.setPlayerRecordList(records);
 				addNewRecordDB(g.getName(), new Gson().toJson(g), "Game", object_id);
@@ -125,8 +126,8 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 			case R.id.add_series_button:
 				Toast.makeText(getApplicationContext(), "SERIES", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Series s = new Series("(S) "+dateFormat,player.getName());
-				s.setId(object_id++);
+				Series s = new Series("(S) "+dateFormat+" " + Integer.toString(object_id), player.getName());
+				s.setId(object_id);
 				records.add(s);
 				player.setPlayerRecordList(records);
 				addNewRecordDB(s.getName(), new Gson().toJson(s), "Series", object_id);
@@ -195,7 +196,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		cv.put("object", obj);
 		cv.put("type", obj_type);
 		
-		database.insert("players", "name", cv);		
+		database.insert("players", "_id", cv);		
     }
 
 }

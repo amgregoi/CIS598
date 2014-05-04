@@ -45,18 +45,25 @@ public class GameActivity extends DBManagment {
 		Intent i = getIntent();
 		int id = i.getIntExtra("id",  -1);
 		//Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND name is ?", new String[] {i.getStringExtra("name")}, null, null, null, null, null);
-		//Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND _id is ?", new String[] {Integer.toString(i.getIntExtra("id", -1))}, null, null, null, null, null);
+		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND _id is ?", new String[] {Integer.toString(i.getIntExtra("id", -1))}, null, null, null, null, null);
+		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO " + Integer.toString(c.getCount()));
 
-		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series')", null, null, null, null, null, null);
+		/*
+		Cursor c = database.query(true, "players", new String[] {"name", "type", "object", "_id"}, "(type is " + "'Game' OR type is " + "'Series')", null, null, null, null, null, null);
+		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO " + Integer.toString(c.getCount()));
 		while(c.moveToNext())
 		{
 			String json = c.getString(2);
 			String type = c.getString(1);
 
-				Game g = new Gson().fromJson(json, Game.class);
-				if(g.getId() == id);
-					game = g;
-		}
+				//Game g = new Gson().fromJson(json, Game.class);
+				if(c.getInt(3) == id)
+				{
+					System.out.println("NOOO: "+Integer.toString(id) + "     " + Integer.toString(c.getInt(3)));
+					game = new Gson().fromJson(json, Game.class);
+					break;
+				}
+		}*/
 		
 		if(c.getCount() == 0)
 		{
@@ -448,7 +455,7 @@ public class GameActivity extends DBManagment {
 		game.setPinLayout(pinLayout);
 		game.setScoreSheet(scoreSheet);
 		Intent i = new Intent();
-		database.execSQL("UPDATE players SET object = ? WHERE name = ?", new Object[] {new Gson().toJson(game), game.getName()});
+		database.execSQL("UPDATE players SET object = ? WHERE _id = ?", new Object[] {new Gson().toJson(game), game.getId()});
 		setResult(RESULT_OK, i);
 		super.onBackPressed();
 	}
@@ -459,7 +466,7 @@ public class GameActivity extends DBManagment {
 		game.setPinLayout(pinLayout);
 		game.setScoreSheet(scoreSheet);
 		Intent i = new Intent();
-		database.execSQL("UPDATE players SET object = ? WHERE name = ?", new Object[] {new Gson().toJson(game), game.getName()});
+		database.execSQL("UPDATE players SET object = ? WHERE _id = ?", new Object[] {new Gson().toJson(game), game.getId()});
 		setResult(RESULT_OK, i);
 		super.onPause();
 	}

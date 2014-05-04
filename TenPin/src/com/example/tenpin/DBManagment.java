@@ -46,7 +46,6 @@ public class DBManagment extends Activity {
 		database = this.openOrCreateDatabase(DATABASE_NAME, this.MODE_WORLD_WRITEABLE, null);
 		database.execSQL(DATABASE_CREATE_PLAYER);
 		object_id = (int) DatabaseUtils.queryNumEntries(database, "players");
-		System.out.println("NOOO: OBJECT_ID = " + Integer.toString(object_id));
 	}
 	
     public void onUpgrade(SQLiteDatabase db) {
