@@ -46,6 +46,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		records = new ArrayList<Record>();
 		
 		
+		
 		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series')", null, null, null, null, null, null);
 		while(c.moveToNext())
 		{
@@ -53,11 +54,16 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 			String type = c.getString(1);
 			if(type.equals("Game"))
 			{
-				records.add(new Gson().fromJson(json, Game.class));
+				Game g = new Gson().fromJson(json, Game.class);
+				//System.out.println("NOOO - PLAYER NAME: " + player.getName()+"  game owner: "+g.getOwner() + "   bool: "+player.getName().equals(g.getOwner()));
+				if(player.getName().equals(g.getOwner()))
+					records.add(g);
 			}
 			else
 			{
-				records.add(new Gson().fromJson(json, Series.class));
+				Series s = new Gson().fromJson(json, Series.class);
+				if(player.getName().equals(s.getOwner()))
+					records.add(s);
 			}
 		}
 		
@@ -109,9 +115,8 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		{
 			case R.id.add_game_button:
 				Toast.makeText(getApplicationContext(), "GAME", Toast.LENGTH_SHORT).show();
-				
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Game g = new Game("(G)"+dateFormat, player.getName());
+				Game g = new Game("(G) "+dateFormat+" "+Integer.toString(object_id+1), player.getName());
 				g.setId(object_id++);
 				records.add(g);				
 				player.setPlayerRecordList(records);
@@ -120,7 +125,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 			case R.id.add_series_button:
 				Toast.makeText(getApplicationContext(), "SERIES", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Series s = new Series("(S)"+dateFormat,player.getName());
+				Series s = new Series("(S) "+dateFormat,player.getName());
 				s.setId(object_id++);
 				records.add(s);
 				player.setPlayerRecordList(records);
@@ -142,7 +147,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
     	if(temp instanceof Game)
     	{
     		Intent i = new Intent(this, GameActivity.class);
-    		//i.putExtra("id", records.get(position).getId());
+    		i.putExtra("id", records.get(position).getId());
     		i.putExtra("name", records.get(position).getName());
     		adapter.notifyDataSetChanged();
         	startActivityForResult(i,1);

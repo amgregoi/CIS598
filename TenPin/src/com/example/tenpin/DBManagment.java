@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -43,6 +45,8 @@ public class DBManagment extends Activity {
 			
 		database = this.openOrCreateDatabase(DATABASE_NAME, this.MODE_WORLD_WRITEABLE, null);
 		database.execSQL(DATABASE_CREATE_PLAYER);
+		object_id = (int) DatabaseUtils.queryNumEntries(database, "players");
+		System.out.println("NOOO: OBJECT_ID = " + Integer.toString(object_id));
 	}
 	
     public void onUpgrade(SQLiteDatabase db) {
