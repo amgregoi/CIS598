@@ -4,10 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Series extends Record{
-	String title, Owner;
+	int seriesScore;
+	int[] gameIds = new int[3];
+	
 	public Series(String name, String owner){
 		super(name, owner, "Series");
-		title = name;
+	}
+	
+	public int[] getGameIds()
+	{
+		return gameIds;
+	}
+	
+	public void setGameIds(int[] ids)
+	{
+		gameIds = ids;
 	}
 	
 	public int describeContents() {
@@ -33,64 +44,5 @@ public class Series extends Record{
 		}
 	};
 	
-	@Override
-	public String toString()
-	{
-		return title;
-	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-public class Series extends Record{
-
-	private int series_total;
-	private String date;		//current title will change later
-	private Game games[];
-	
-	public Series(String d)
-	{
-		super(d, "Series");
-		date = d;
-		series_total = 10;
-	}
-	
-	public void writeToParcel(Parcel dest, int flags) {
-		super.writeToParcel(dest, flags);
-	}
-
-	public Series(Parcel source) {
-		super(source);	
-	}
-
-	public static final Parcelable.Creator<Series> CREATOR = new Parcelable.Creator<Series>() {
-		public Series createFromParcel(Parcel in) {
-			return new Series(in);
-		}
-	
-		public Series[] newArray(int size) {
-			return new Series[size];
-		}
-	};	
-	
-	
-	@Override
-	public String toString()
-	{
-		return date;
-	}
-}*/

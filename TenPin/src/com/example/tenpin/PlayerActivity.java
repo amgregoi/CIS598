@@ -55,7 +55,6 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 			if(type.equals("Game"))
 			{
 				Game g = new Gson().fromJson(json, Game.class);
-				//System.out.println("NOOO - PLAYER NAME: " + player.getName()+"  game owner: "+g.getOwner() + "   bool: "+player.getName().equals(g.getOwner()));
 				if(player.getName().equals(g.getOwner()))
 					records.add(g);
 			}
@@ -68,8 +67,6 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		}
 		
 		recordList = (ListView)findViewById(R.id.player_record_list);
-		
-		
 		adapter = new ArrayAdapter<Record>(this, android.R.layout.simple_list_item_1, records);
         recordList.setAdapter(adapter);	
 		
@@ -107,6 +104,11 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 * Checks button clicks and carries out actions
+	 */
 	@Override
 	public void onClick(View v)
 	{
@@ -124,13 +126,39 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 				addNewRecordDB(g.getName(), new Gson().toJson(g), "Game", object_id);
 				break;
 			case R.id.add_series_button:
-				Toast.makeText(getApplicationContext(), "SERIES", Toast.LENGTH_SHORT).show();
+				object_id++;
+				Toast.makeText(getApplicationContext(), "Series", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Series s = new Series("(S) "+dateFormat+" " + Integer.toString(object_id), player.getName());
+				Series s = new Series("(S) "+dateFormat+" "+Integer.toString(object_id), player.getName());
 				s.setId(object_id);
-				records.add(s);
+				records.add(s);				
 				player.setPlayerRecordList(records);
-				addNewRecordDB(s.getName(), new Gson().toJson(s), "Series", object_id);
+				s.setGameIds(new int[] {object_id+1, object_id+2, object_id+3});
+				//object_id++;
+				
+				/*
+				 * Fix record constructor to take in id rather than set it manually after initialization
+				 */
+				/*
+				addNewRecordDB(s.getName(), new Gson().toJson(new Game("(G) "+dateFormat+" "+Integer.toString(object_id), player.getName())), "GSeries", ++object_id);
+				addNewRecordDB(s.getName(), new Gson().toJson(new Game("(G) "+dateFormat+" "+Integer.toString(object_id), player.getName())), "GSeries", ++object_id);
+				addNewRecordDB(s.getName(), new Gson().toJson(new Game("(G) "+dateFormat+" "+Integer.toString(object_id), player.getName())), "GSeries", ++object_id);
+				*/
+				
+				
+				Game g1 = new Game("(G) "+dateFormat+" "+Integer.toString(object_id+1), player.getName());
+				g1.setId(object_id+1);
+				Game g2 = new Game("(G) "+dateFormat+" "+Integer.toString(object_id+2), player.getName());
+				g2.setId(object_id+2);
+				Game g3 = new Game("(G) "+dateFormat+" "+Integer.toString(object_id+3), player.getName());
+				g3.setId(object_id+3);
+				
+				
+				addNewRecordDB(s.getName(), new Gson().toJson(g1), "GSeries", ++object_id);
+				addNewRecordDB(s.getName(), new Gson().toJson(g2), "GSeries", ++object_id);
+				addNewRecordDB(s.getName(), new Gson().toJson(g3), "GSeries", ++object_id);
+
+				addNewRecordDB(s.getName(), new Gson().toJson(s), "Series", s.getId());
 				break;
 			case R.id.stats_button:
 				//Toast.makeText(getApplicationContext(), "STATS", Toast.LENGTH_SHORT).show();
@@ -141,6 +169,11 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		adapter.notifyDataSetChanged();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
+	 * checks for game/series chosen in listview and starts appropriate activity
+	 */
 	@Override
     public void onItemClick(AdapterView parent, View v, int position, long id)
     {    	
@@ -154,9 +187,10 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
         	startActivityForResult(i,1);
     	}
     	else if(temp instanceof Series)
-    	{
+    	{  		
     		Intent i = new Intent(this, SeriesActivity.class);
-        	i.putExtra("series", records.get(position));
+        	//i.putExtra("series", records.get(position));
+    		i.putExtra("id", records.get(position).getId());
         	adapter.notifyDataSetChanged();
         	startActivityForResult(i,1);
     	}
@@ -166,28 +200,14 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if(resultCode == RESULT_OK){      
-				
-				/*String result3 = data.getStringExtra("name");
-				String result2 = data.getStringExtra("object");
-				String result = data.getStringExtra("type");
-
-				System.out.println("NOOO - RESULT1: " + result);
-				System.out.println("NOOO - RESULT2: : " + result2);
-				System.out.println("NOOO - RESULT3: : " + result3);
-				if(result != null)
-				{
-
-					ContentValues cv = new ContentValues();
-					cv.put("object", result2);
-					database.update("players", cv, "type is " + result + "AND object is " + result2 + " AND name is "+ result3, null);
-					System.out.println("NOOO: "+ result3 + " updated fine");
-			        //records.set(position, result);
-			        //adapter.notifyDataSetChanged();
-				}*/
+				//nothing special happens on the return of this activity, I added this on the chance I changed the implementation
 			}
 		}
 	}
 	
+	/*
+	 * adds game/series object to the database
+	 */
     private void addNewRecordDB(String name, String obj, String obj_type, int id)
     {
     	ContentValues cv = new ContentValues();

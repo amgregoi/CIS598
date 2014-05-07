@@ -31,12 +31,6 @@ public class NewUserActivity extends DBManagment implements OnClickListener{
 		done.setOnClickListener(this);
 		
 	}
-	
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +52,11 @@ public class NewUserActivity extends DBManagment implements OnClickListener{
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 * click listener for done button
+	 */
 	@Override
     public void onClick(View v)
     {

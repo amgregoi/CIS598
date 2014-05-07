@@ -16,16 +16,25 @@ public class Player implements Parcelable {
 		record = new ArrayList<Record>();
 	}
 	
+	/*
+	 * getter for name
+	 */
 	public String getName()
 	{
 		return title;
 	}
 	
+	/*
+	 * setter record list     **old implementation, may be taken out
+	 */
 	public void setPlayerRecordList(List<Record> list)
 	{
 		record = list;
 	}
 	
+	/*
+	 * getter record list     **old implementation, may be taken out
+	 */
 	public List<Record> getPlayerRecordList()
 	{
 		return record;

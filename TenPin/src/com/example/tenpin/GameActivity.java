@@ -29,7 +29,7 @@ import android.widget.ImageView;
 public class GameActivity extends DBManagment {
 	InputMethodManager imm;
 	int activeFrame = 0, ballThrown = 0;
-	char[][] pinLayout;
+	float[][] pinLayout;
 	String[][] scoreSheet;
 	String[] frameScore;
 	ImageView cur;
@@ -43,45 +43,23 @@ public class GameActivity extends DBManagment {
 		imm  = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 		Intent i = getIntent();
-		int id = i.getIntExtra("id",  -1);
-		//Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND name is ?", new String[] {i.getStringExtra("name")}, null, null, null, null, null);
-		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'Series') AND _id is ?", new String[] {Integer.toString(i.getIntExtra("id", -1))}, null, null, null, null, null);
-		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO " + Integer.toString(c.getCount()));
-
-		/*
-		Cursor c = database.query(true, "players", new String[] {"name", "type", "object", "_id"}, "(type is " + "'Game' OR type is " + "'Series')", null, null, null, null, null, null);
-		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO " + Integer.toString(c.getCount()));
-		while(c.moveToNext())
-		{
-			String json = c.getString(2);
-			String type = c.getString(1);
-
-				//Game g = new Gson().fromJson(json, Game.class);
-				if(c.getInt(3) == id)
-				{
-					System.out.println("NOOO: "+Integer.toString(id) + "     " + Integer.toString(c.getInt(3)));
-					game = new Gson().fromJson(json, Game.class);
-					break;
-				}
-		}*/
+		Cursor c = database.query(true, "players", new String[] {"name", "type", "object"}, "(type is " + "'Game' OR type is " + "'GSeries') AND _id is ?", new String[] {Integer.toString(i.getIntExtra("id", -1))}, null, null, null, null, null);
 		
 		if(c.getCount() == 0)
 		{
-			super.finish();
+			this.finishActivity(-1);
 		}
 		while(c.moveToNext())
 		{
 			String json = c.getString(2);
-			String type = c.getString(1);
-			if(type.equals("Game"))
-				game = new Gson().fromJson(json, Game.class);	
+			game = new Gson().fromJson(json, Game.class);	
 		}	
 		
 		getActionBar().setTitle(game.toString());
 		
 		if(game.getPinLayout() == null)
 		{
-			pinLayout = new char[10][10];
+			pinLayout = new float[10][10];
 			scoreSheet = new String[10][3];
 			init();
 			game.setPinLayout(pinLayout);
@@ -90,10 +68,14 @@ public class GameActivity extends DBManagment {
 		{
 			pinLayout = game.getPinLayout();
 			scoreSheet = game.getScoreSheet();
-			setFramePinLayout(0);		
 		}
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onWindowFocusChanged(boolean)
+	 * updates the scoreSheet canvas elements to correct scores when activity loads
+	 */
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 	    // your code here
@@ -105,6 +87,7 @@ public class GameActivity extends DBManagment {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game, menu);
+		menu.add("Enter Final Score");
 		return true;
 	}
 
@@ -120,76 +103,67 @@ public class GameActivity extends DBManagment {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onKeyUp(int, android.view.KeyEvent)
+	 * Restricts keypresses to 0-9, X,  and /
+	 */
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 	    switch (keyCode) {
 	        case KeyEvent.KEYCODE_0:
-	        	System.out.println("NOOO THIS KEY: 0");
 	        	frameScore[ballThrown] = "0";
 	        	ballThrown++;
 	            break;
 	        case KeyEvent.KEYCODE_1:
-	        	System.out.println("NOOO THIS KEY: 1");
 	        	frameScore[ballThrown] = "1";
 	        	ballThrown++;
 	            break;
 	        case KeyEvent.KEYCODE_2:
-	        	System.out.println("NOOO THIS KEY: 2");
 	        	frameScore[ballThrown] = "2";
 	        	ballThrown++;
 	        	break;
 	        	case KeyEvent.KEYCODE_3:
-	        	System.out.println("NOOO THIS KEY: 3");
 	        	frameScore[ballThrown] = "3";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_4:
-	        	System.out.println("NOOO THIS KEY: 4");
 	        	frameScore[ballThrown] = "4";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_5:
-	        	System.out.println("NOOO THIS KEY: 5");
 	        	frameScore[ballThrown] = "5";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_6:
-	        	System.out.println("NOOO THIS KEY: 6");
 	        	frameScore[ballThrown] = "6";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_7:
-	        	System.out.println("NOOO THIS KEY: 7");
 	        	frameScore[ballThrown] = "7";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_8:
-	        	System.out.println("NOOO THIS KEY: 8");
 	        	frameScore[ballThrown] = "8";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_9:
-	        	System.out.println("NOOO THIS KEY: 9");
 	        	frameScore[ballThrown] = "9";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_SLASH:
-	        	System.out.println("NOOO THIS KEY: /");
 	        	frameScore[ballThrown] = "/";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_X:
-	        	System.out.println("NOOO THIS KEY: X");
 	        	frameScore[ballThrown] = "X";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_MINUS:
-	        	System.out.println("NOOO THIS KEY: -");
 	        	frameScore[ballThrown] = "-";
 	        	ballThrown++;
 	        	break;
 	        case KeyEvent.KEYCODE_ENTER:
-	        	System.out.println("NOOO THIS KEY: Enter");
 	        	final InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.toggleSoftInput(0, 0);
 	        	ballThrown = 0;
@@ -205,6 +179,9 @@ public class GameActivity extends DBManagment {
 	    return true;
 	}
 	
+	/*
+	 * Click listener for canvas and pin objects
+	 */
 	public void onClick(View v){
 		ImageView temp;
 		switch(v.getId())
@@ -212,55 +189,55 @@ public class GameActivity extends DBManagment {
 			case R.id.pin1_image:
 				temp = (ImageView)findViewById(R.id.pin1_image);
 				setPinTransparency(temp);				
-				pinLayout[activeFrame][0] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][0] = temp.getAlpha();
 				break;
 			case R.id.pin2_image:
 				temp = (ImageView)findViewById(R.id.pin2_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][1] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][1] = (temp.getAlpha());
 				break;
 			case R.id.pin3_image:
 				temp = (ImageView)findViewById(R.id.pin3_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][2] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][2] = (temp.getAlpha());
 				break;
 			case R.id.pin4_image:
 				temp = (ImageView)findViewById(R.id.pin4_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][3] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][3] = (temp.getAlpha());
 				break;
 			case R.id.pin5_image:
 				temp = (ImageView)findViewById(R.id.pin5_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][4] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][4] = (temp.getAlpha());
 				break;
 			case R.id.pin6_image:
 				temp = (ImageView)findViewById(R.id.pin6_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][5] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][5] = (temp.getAlpha());
 				break;
 			case R.id.pin7_image:
 				temp = (ImageView)findViewById(R.id.pin7_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][6] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][6] = (temp.getAlpha());
 				break;
 			case R.id.pin8_image:
 				temp = (ImageView)findViewById(R.id.pin8_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][7] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][7] = (temp.getAlpha());
 				break;
 			case R.id.pin9_image:
 				temp = (ImageView)findViewById(R.id.pin9_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][8] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][8] = (temp.getAlpha());
 				break;
 			case R.id.pin10_image:
 				temp = (ImageView)findViewById(R.id.pin10_image);
 				setPinTransparency(temp);
-				pinLayout[activeFrame][9] = valToAlpha(temp.getAlpha());
+				pinLayout[activeFrame][9] = (temp.getAlpha());
 				break;
 			case R.id.Frame1:
-				cur = (ImageView)findViewById(R.id.Frame1);//(ImageView)findViewById(R.id.Frame1);
+				cur = (ImageView)findViewById(R.id.Frame1);
 				frameScore = new String[]{"","",""}; ballThrown = 0;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 0);
@@ -323,43 +300,46 @@ public class GameActivity extends DBManagment {
 				break;
 		}
 	}
+	
+	/*
+	 * Draws user input to canvas frame
+	 */
 	private void setFrameScoreCanvas(ImageView frame, String ball1, String ball2, String ball3){
-		int x1 = 10;
-		int y1 = 42;
 		
-		int x2 = 120;
-		int y2 = 70;
-		int width,height;
-		if(frame == (ImageView)findViewById(R.id.Frame10))
-		{
-			width = 280;
-			height = 50;
-		}
-		else
-		{
-			width = 180;
-			height = 100;
-		}
+		final float scale = getResources().getDisplayMetrics().density;
+        int x1 = (int) (10 * scale + 0.5f);
+        int y1 = (int) (24 * scale + 0.5f);
+       
+        int x2 = (int) (60 * scale + 0.5f);
+        int y2 = (int) (70 * scale + 0.5f);
+       
+        int x3 = (int) (72 * scale + 0.5f);
 		
-		int x3 = 200;
+		
 		frame.buildDrawingCache();
-		Bitmap tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+		Bitmap tempBitmap = Bitmap.createBitmap(frame.getWidth(), frame.getHeight(), Bitmap.Config.RGB_565);
 		Canvas tempCanvas = new Canvas(tempBitmap);
 		tempCanvas.drawBitmap(frame.getDrawingCache(), 0, 0, null);
 		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setTextSize(50);
+		paint.setTextSize((int) (30 * scale + 0.5f));
+		
 		
 		tempCanvas.drawText(ball1, x1, y1, paint);
 		tempCanvas.drawText(ball2, x2, y1, paint);
 
 		
 		if(frame.getId() == R.id.Frame10)
+		{
 			tempCanvas.drawText(ball3, x3, y1, paint);
+		}
 
 		//Attach the canvas to the ImageView
 		frame.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
 	}
 	
+	/*
+	 * set the transparency of the pin object from visible, 1/2 visible, and transparent
+	 */
 	private void setPinTransparency(ImageView pin)
 	{
 		if(pin.getAlpha() == 1.0)
@@ -371,38 +351,27 @@ public class GameActivity extends DBManagment {
 	}
 
 	
+	/*
+	 * sets the pin transparency levels for the selected frame
+	 */
 	private void setFramePinLayout(int frame){
-		char[] layout = pinLayout[frame];
-		findViewById(R.id.pin1_image).setAlpha(alphaToVal(layout[0]));
-		findViewById(R.id.pin2_image).setAlpha(alphaToVal(layout[1]));
-		findViewById(R.id.pin3_image).setAlpha(alphaToVal(layout[2]));
-		findViewById(R.id.pin4_image).setAlpha(alphaToVal(layout[3]));
-		findViewById(R.id.pin5_image).setAlpha(alphaToVal(layout[4]));
-		findViewById(R.id.pin6_image).setAlpha(alphaToVal(layout[5]));
-		findViewById(R.id.pin7_image).setAlpha(alphaToVal(layout[6]));
-		findViewById(R.id.pin8_image).setAlpha(alphaToVal(layout[7]));
-		findViewById(R.id.pin9_image).setAlpha(alphaToVal(layout[8]));
-		findViewById(R.id.pin10_image).setAlpha(alphaToVal(layout[9]));
+		float[] layout = pinLayout[frame];
+		findViewById(R.id.pin1_image).setAlpha((layout[0]));
+		findViewById(R.id.pin2_image).setAlpha((layout[1]));
+		findViewById(R.id.pin3_image).setAlpha((layout[2]));
+		findViewById(R.id.pin4_image).setAlpha((layout[3]));
+		findViewById(R.id.pin5_image).setAlpha((layout[4]));
+		findViewById(R.id.pin6_image).setAlpha((layout[5]));
+		findViewById(R.id.pin7_image).setAlpha((layout[6]));
+		findViewById(R.id.pin8_image).setAlpha((layout[7]));
+		findViewById(R.id.pin9_image).setAlpha((layout[8]));
+		findViewById(R.id.pin10_image).setAlpha((layout[9]));
 		
 	}
 	
-	private float alphaToVal(char x)
-	{
-		if(x == '2') return (float)1;
-		else if(x == '1') return (float).5;
-		else return (float)0;
-	}
-
-	private char valToAlpha(float x)
-	{
-		if(x == 0)
-			return '0';
-		else if(x == (float).5)
-			return '1';
-		else 
-			return '2';
-	}
-	
+	/*
+	 * initialize pin layouts if already null
+	 */
 	private void init(){
 		for(int i=0; i<10; i++)
 		{
@@ -411,9 +380,11 @@ public class GameActivity extends DBManagment {
 		}	
 	}
 	
+	/*
+	 * updates canvas elements with scoresheet values on activity start
+	 */
 	private void updateCanvasOnStart()
 	{
-		updateFrame((ImageView)findViewById(R.id.Frame1), 0);
 		updateFrame((ImageView)findViewById(R.id.Frame2), 1);
 		updateFrame((ImageView)findViewById(R.id.Frame3), 2);
 		updateFrame((ImageView)findViewById(R.id.Frame4), 3);
@@ -423,8 +394,12 @@ public class GameActivity extends DBManagment {
 		updateFrame((ImageView)findViewById(R.id.Frame8), 7);
 		updateFrame((ImageView)findViewById(R.id.Frame9), 8);
 		updateFrame((ImageView)findViewById(R.id.Frame10), 9);
+		updateFrame((ImageView)findViewById(R.id.Frame1), 0);
 	}
 	
+	/*
+	 * updates frame elements 
+	 */
 	private void updateFrame(ImageView temp, int frame)
 	{
 		
@@ -433,10 +408,11 @@ public class GameActivity extends DBManagment {
 		String[] S = getFrameScore(frame);
 		if(S[0] != null)
 			setFrameScoreCanvas(temp, S[0], S[1], "");
-
 	}
 	
-	
+	/*
+	 * set scoreSheet values for frame
+	 */
 	private void setFrameScore(String val1, String val2, String val3, int frame)
 	{
 		scoreSheet[frame][0] = val1;
@@ -444,11 +420,19 @@ public class GameActivity extends DBManagment {
 		scoreSheet[frame][2] = val3;
 	}
 	
+	/*
+	 * get scoresheet values for frame
+	 */
 	private String[] getFrameScore(int frame)
 	{
 		return new String[] {scoreSheet[frame][0],scoreSheet[frame][1], scoreSheet[frame][2]};
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 * override back button to updating game object in database before exiting activity
+	 */
 	@Override
 	public void onBackPressed()
 	{
@@ -460,6 +444,11 @@ public class GameActivity extends DBManagment {
 		super.onBackPressed();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.example.tenpin.DBManagment#onPause()
+	 * override onPause to updating game object in database before exiting activity
+	 */
 	@Override
 	public void onPause()
 	{

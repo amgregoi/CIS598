@@ -5,22 +5,32 @@ import android.os.Parcelable;
 
 public class Game extends Record{
 
-	char[][] pinLayout;
+	float[][] pinLayout;
 	String[][] scoreSheet = new String[10][3];
+	int gameScore;
 
-	public Game(String title, String owner){
-		super(title, owner, "Game");
+	/*
+	 * Game Constructor
+	 */
+	public Game(String name, String owner){
+		super(name, owner, "Game");
 	}
 	
 	public int describeContents() {
 		return this.hashCode();
 	}
 	
+	/*
+	 * setter for the scoreSheet
+	 */
 	public void setScoreSheet(String[][] score)
 	{
 		scoreSheet = score;
 	}
 	
+	/*
+	 * getter for scoreSheet
+	 */
 	public String[][] getScoreSheet()
 	{
 		return scoreSheet;
@@ -35,11 +45,17 @@ public class Game extends Record{
 		super(source);	
 	}
 	
-	public char[][] getPinLayout(){
+	/*
+	 * getter pinLayout
+	 */
+	public float[][] getPinLayout(){
 		return pinLayout;
 	}
 	
-	public void setPinLayout(char[][] layout){
+	/*
+	 * setter pinLayout
+	 */
+	public void setPinLayout(float[][] layout){
 		this.pinLayout = layout.clone();
 	}
 	
@@ -53,119 +69,33 @@ public class Game extends Record{
 		}
 	};
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.example.tenpin.Record#toString()
+	 * Override tostring
+	 */
 	@Override
 	public String toString()
 	{
 		return super.toString();
 	}
 	
+	/*
+	 * setter for gameScore
+	 */
+	public void setGameScore(int score)
+	{
+		gameScore = score;
+	}
+	
+	/*
+	 * getter for gameScore
+	 */
+	public int getGameScore()
+	{
+		return gameScore;
+	}
+	
 
 
 }//end class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-public class Game extends Record{
-
-	private int score;
-	private String date;		//current title will change later
-	private int score_sheet[];
-	char[][] pinLayout;
-	
-	
-	public Game(String d)
-	{
-		super(d, "Game");
-		date = d;
-		score = 0;
-		score_sheet = new int[21];
-		pinLayout = new char[10][10];
-	}
-	
-	
-	public void writeToParcel(Parcel dest, int flags) {
-		super.writeToParcel(dest, flags);
-	}
-
-	public Game(Parcel source) {
-		super(source);	
-	}
-
-	public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
-		public Game createFromParcel(Parcel in) {
-			return new Game(in);
-		}
-	
-		public Game[] newArray(int size) {
-			return new Game[size];
-		}
-	};	
-	
-	
-	
-	
-	
-	
-	@Override
-	public String toString()
-	{
-		return date;
-	}
-	
-	public char[][] pinSetup()
-	{
-		return pinLayout;
-	}
-	
-	 //
-	 // returns score of the game
-	 //
-	public int getScore()
-	{
-		return score;
-	}
-	
-	//
-	 // function used to set the final score of the game.
-	 //
-	public void setFinalScore(int gameScore)
-	{
-		score = gameScore;
-	}
-	
-	//
-	 // num is the number of pins you knocked down for the last ball thrown.
-	 // frame represents which frame you are in
-	 // ballThrown represents if this is the first or second ball of the frame.
-	 //
-	public void setScore(int num, int frame, int ballThrown)
-	{
-		score_sheet[frame+ballThrown] = num;
-	}
-	
-}
-*/
