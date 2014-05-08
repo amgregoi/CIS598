@@ -7,7 +7,6 @@ public class Game extends Record{
 
 	float[][] pinLayout;
 	String[][] scoreSheet = new String[10][3];
-	int gameScore;
 
 	/*
 	 * Game Constructor
@@ -80,21 +79,6 @@ public class Game extends Record{
 		return super.toString();
 	}
 	
-	/*
-	 * setter for gameScore
-	 */
-	public void setGameScore(int score)
-	{
-		gameScore = score;
-	}
-	
-	/*
-	 * getter for gameScore
-	 */
-	public int getGameScore()
-	{
-		return gameScore;
-	}
 	
 
 

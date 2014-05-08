@@ -1,11 +1,5 @@
 package com.example.tenpin;
 
-/*
- * 
- * CHANGE QUERY TO USE ID RATHER THAN NAME  *** IMPORTANT
- * 
- * 
- */
 import com.google.gson.Gson;
 
 import android.annotation.SuppressLint;
@@ -23,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 @SuppressLint("NewApi")
@@ -34,12 +29,14 @@ public class GameActivity extends DBManagment {
 	String[] frameScore;
 	ImageView cur;
 	Game game;
+	TextView et;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
-		
+		et = (TextView)findViewById(R.id.finalScoretext);
 		imm  = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 		Intent i = getIntent();
@@ -69,6 +66,8 @@ public class GameActivity extends DBManagment {
 			pinLayout = game.getPinLayout();
 			scoreSheet = game.getScoreSheet();
 		}
+		
+		et.setText("Final Score: "+Integer.toString(game.getScore()));
 	}
 	
 	/*
@@ -173,6 +172,14 @@ public class GameActivity extends DBManagment {
 	    }
 	    if(activeFrame < 9) ballThrown = ballThrown % 2;
 	    else ballThrown = ballThrown % 3;
+	    
+	    if(activeFrame == 10)
+	    {
+	    	String score = frameScore[0]+frameScore[1]+frameScore[2];
+	    	et.setText("Final Score: "+ score.replaceFirst ("^0*", ""));
+	    	game.setScore(Integer.parseInt(score));
+	    	return true;
+	    }
 	    
 	    setFrameScore(frameScore[0], frameScore[1], frameScore[2], activeFrame);
 	    updateFrame(cur,  activeFrame);
@@ -281,7 +288,7 @@ public class GameActivity extends DBManagment {
 			case R.id.Frame8:
 				cur = (ImageView)findViewById(R.id.Frame8);
 				frameScore = new String[]{"","",""}; ballThrown = 0;
-				imm.toggleSoftInput(0, 0);				
+				imm.toggleSoftInput(0, 0);
 				updateFrame(cur, 7);
 				break;
 			case R.id.Frame9:
@@ -296,6 +303,12 @@ public class GameActivity extends DBManagment {
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 9);
 				break;
+			case R.id.finalScoretext:
+				System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				frameScore = new String[]{"","",""}; ballThrown = 0;
+				activeFrame = 10;
+				//imm.showSoftInput(v, 0);
+				imm.toggleSoftInput(0, 0);
 			default:
 				break;
 		}
@@ -307,13 +320,12 @@ public class GameActivity extends DBManagment {
 	private void setFrameScoreCanvas(ImageView frame, String ball1, String ball2, String ball3){
 		
 		final float scale = getResources().getDisplayMetrics().density;
-        int x1 = (int) (10 * scale + 0.5f);
-        int y1 = (int) (24 * scale + 0.5f);
-       
+		
+		int y1 = (int) (24 * scale + 0.5f);
+		
+		int x1 = (int) (10 * scale + 0.5f);
         int x2 = (int) (60 * scale + 0.5f);
-        int y2 = (int) (70 * scale + 0.5f);
-       
-        int x3 = (int) (72 * scale + 0.5f);
+        int x3 = (int) (105 * scale + 0.5f);
 		
 		
 		frame.buildDrawingCache();
@@ -376,7 +388,7 @@ public class GameActivity extends DBManagment {
 		for(int i=0; i<10; i++)
 		{
 			for(int j=0; j<10; j++)
-				pinLayout[i][j] = '2';
+				pinLayout[i][j] = (float) 1.0;
 		}	
 	}
 	
@@ -393,7 +405,7 @@ public class GameActivity extends DBManagment {
 		updateFrame((ImageView)findViewById(R.id.Frame7), 6);
 		updateFrame((ImageView)findViewById(R.id.Frame8), 7);
 		updateFrame((ImageView)findViewById(R.id.Frame9), 8);
-		updateFrame((ImageView)findViewById(R.id.Frame10), 9);
+		updateFrame((ImageView)findViewById(R.id.Frame10),9);
 		updateFrame((ImageView)findViewById(R.id.Frame1), 0);
 	}
 	
@@ -407,7 +419,7 @@ public class GameActivity extends DBManagment {
 		setFramePinLayout(frame);
 		String[] S = getFrameScore(frame);
 		if(S[0] != null)
-			setFrameScoreCanvas(temp, S[0], S[1], "");
+			setFrameScoreCanvas(temp, S[0], S[1], S[2]);
 	}
 	
 	/*

@@ -1,8 +1,8 @@
 /*
  * 
  * 
- * MAKE ANOTHER TABLE FOR GAMES AND USE PLAYER NAMES AS A KEY TO LINK THE TWO TABLES
- * 
+ * Image Recognition link:
+ * 		http://en.wikipedia.org/wiki/OpenCV
  * 
  * 
  */
@@ -122,7 +122,8 @@ public class MainActivity extends DBManagment implements OnClickListener, OnItem
      * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
      * calls the chosen players activity which will list their games/series
      */
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public void onItemClick(AdapterView parent, View v, int position, long id)
     {
     	Intent i = new Intent(this, PlayerActivity.class);

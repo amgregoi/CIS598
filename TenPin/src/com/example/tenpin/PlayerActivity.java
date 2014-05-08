@@ -92,6 +92,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 	
 	
 	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -119,7 +120,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 				object_id++;
 				Toast.makeText(getApplicationContext(), "GAME", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Game g = new Game("(G) "+dateFormat+" "+Integer.toString(object_id), player.getName());
+				Game g = new Game("(G) "+dateFormat, player.getName());
 				g.setId(object_id);
 				records.add(g);				
 				player.setPlayerRecordList(records);
@@ -129,7 +130,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 				object_id++;
 				Toast.makeText(getApplicationContext(), "Series", Toast.LENGTH_SHORT).show();
 				dateFormat = new SimpleDateFormat("dd-MM-yy").format(now);
-				Series s = new Series("(S) "+dateFormat+" "+Integer.toString(object_id), player.getName());
+				Series s = new Series("(S) " + dateFormat, player.getName());
 				s.setId(object_id);
 				records.add(s);				
 				player.setPlayerRecordList(records);
@@ -174,6 +175,7 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
 	 * checks for game/series chosen in listview and starts appropriate activity
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
     public void onItemClick(AdapterView parent, View v, int position, long id)
     {    	
@@ -201,6 +203,8 @@ public class PlayerActivity extends DBManagment implements OnClickListener, OnIt
 		if (requestCode == 1) {
 			if(resultCode == RESULT_OK){      
 				//nothing special happens on the return of this activity, I added this on the chance I changed the implementation
+				finish();
+				startActivity(getIntent());
 			}
 		}
 	}

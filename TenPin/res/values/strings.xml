@@ -10,5 +10,9 @@
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="title_activity_dbmanagment">DBManagment</string>
     <string name="title_activity_bowling_keyboard">BowlingKeyboard</string>
+    <string name="pin">Pin</string>
+    <string name="frame">Frame</string>
+    <string name="empty">Used for alignment</string>
+
 
 </resources>

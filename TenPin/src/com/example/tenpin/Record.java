@@ -7,6 +7,7 @@ public abstract class Record implements Parcelable{
 	private String name;
 	private String type;
 	private String Owner;
+	private int Score = 0;
 	private int id=-1;
 	
 	public String getName() {
@@ -20,6 +21,16 @@ public abstract class Record implements Parcelable{
 	public String getOwner()
 	{
 		return Owner;
+	}
+	
+	public int getScore()
+	{
+		return Score;
+	}
+	
+	public void setScore(int s)
+	{
+		Score = s;
 	}
 	
 	public void setId(int val){
@@ -78,6 +89,6 @@ public abstract class Record implements Parcelable{
 	@Override
 	public String toString()
 	{
-		return name;
+		return name + "\t\t\t"+ Integer.toString(Score);
 	}
 }

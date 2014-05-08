@@ -1,32 +1,24 @@
 package com.example.tenpin;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+
 
 public class DBManagment extends Activity {
 	
 	 protected SQLiteDatabase database;
-	 private SQLiteDatabase ourHelper;
 
 	 
 	 
      private static final String DATABASE_NAME = "Test_DB";   
      private static final String DATABASE_TABLE_NAME = "players";   
-     private static final int DATABASE_VERSION = 1;    
+     //private static final int DATABASE_VERSION = 1;    
      public static int object_id = -1;
      //  Table1 properties   
    public static final String KEY_ROWID = "_id";   
@@ -37,13 +29,13 @@ public class DBManagment extends Activity {
    private static final String DATABASE_CREATE_PLAYER = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_NAME + "( " + KEY_ROWID + " INTEGER, " + KEY_NAME + " TEXT, " + object_type + " TEXT, " + object + " TEXT)";      
 	 
 	 
-	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dbmanagment);
 			
-		database = this.openOrCreateDatabase(DATABASE_NAME, this.MODE_WORLD_WRITEABLE, null);
+		database = this.openOrCreateDatabase(DATABASE_NAME, Context.MODE_WORLD_WRITEABLE, null);
 		database.execSQL(DATABASE_CREATE_PLAYER);
 		object_id = (int) DatabaseUtils.queryNumEntries(database, "players");
 	}
