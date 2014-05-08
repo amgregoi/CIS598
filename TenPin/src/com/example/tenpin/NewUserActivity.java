@@ -20,6 +20,8 @@ public class NewUserActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_user);
+		getActionBar().setTitle("Add New User");
+
 		input = (EditText)findViewById(R.id.user_input);
 		done = (Button)findViewById(R.id.done_button);
 		done.setOnClickListener(this);

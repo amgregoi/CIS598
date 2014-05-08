@@ -29,6 +29,7 @@ public class GameActivity extends DBManagment {
 	String[] frameScore;
 	ImageView cur;
 	Game game;
+	boolean fScore = false;
 	TextView et;
 	
 	
@@ -170,10 +171,11 @@ public class GameActivity extends DBManagment {
 	        default:
 	            return super.onKeyUp(keyCode, event);
 	    }
-	    if(activeFrame < 9) ballThrown = ballThrown % 2;
-	    else ballThrown = ballThrown % 3;
 	    
-	    if(activeFrame == 10)
+	    if(activeFrame == 9 || fScore) ballThrown = ballThrown % 3;
+	    else ballThrown = ballThrown % 2;
+	    
+	    if(fScore)
 	    {
 	    	String score = frameScore[0]+frameScore[1]+frameScore[2];
 	    	et.setText("Final Score: "+ score.replaceFirst ("^0*", ""));
@@ -245,69 +247,68 @@ public class GameActivity extends DBManagment {
 				break;
 			case R.id.Frame1:
 				cur = (ImageView)findViewById(R.id.Frame1);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 0);
 				break;
 			case R.id.Frame2:
 				cur = (ImageView)findViewById(R.id.Frame2);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 1);
 				break;
 			case R.id.Frame3:
 				cur = (ImageView)findViewById(R.id.Frame3);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 2);
 				break;
 			case R.id.Frame4:
 				cur = (ImageView)findViewById(R.id.Frame4);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 3);
 				break;
 			case R.id.Frame5:
 				cur = (ImageView)findViewById(R.id.Frame5);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 4);
 				break;
 			case R.id.Frame6:
 				cur = (ImageView)findViewById(R.id.Frame6);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 5);
 				break;
 			case R.id.Frame7:
 				cur = (ImageView)findViewById(R.id.Frame7);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 6);
 				break;
 			case R.id.Frame8:
 				cur = (ImageView)findViewById(R.id.Frame8);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);
 				updateFrame(cur, 7);
 				break;
 			case R.id.Frame9:
 				cur = (ImageView)findViewById(R.id.Frame9);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 8);
 				break;
 			case R.id.Frame10:
 				cur = (ImageView)findViewById(R.id.Frame10);
-				frameScore = new String[]{"","",""}; ballThrown = 0;
+				frameScore = new String[]{"","",""}; ballThrown = 0; fScore = false;
 				imm.toggleSoftInput(0, 0);				
 				updateFrame(cur, 9);
 				break;
 			case R.id.finalScoretext:
-				System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				frameScore = new String[]{"","",""}; ballThrown = 0;
-				activeFrame = 10;
-				//imm.showSoftInput(v, 0);
+				//activeFrame = 10;
+				fScore = true;
 				imm.toggleSoftInput(0, 0);
 			default:
 				break;
